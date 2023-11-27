@@ -40,4 +40,5 @@ import { AppExceptionsFilter } from './common/exceptions/exception.filter';
     },
   ],
 })
+
 export class MainModule { }
