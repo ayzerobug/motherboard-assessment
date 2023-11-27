@@ -1,6 +1,6 @@
 export const AppRoutes = {
     index: "/",
-    login: "/login",
+    login: "/",
     register: "/register",
 
     appDashboard: '/app/dashboard',

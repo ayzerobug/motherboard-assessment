@@ -8,7 +8,9 @@ import { CreateUserDto } from "../dto/create-user.dto";
 export class UserService {
 
     async createUser(dto: CreateUserDto): Promise<User> {
-        //TODO: Handle already exists error
+        if (await User.findByEmail(dto.email))
+            throw new ForbiddenException("Email address already exist");
+
         const password = await argon.hash(dto.password);
 
         const user = await User.createAndSave({ ...dto, password });

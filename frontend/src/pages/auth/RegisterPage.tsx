@@ -9,21 +9,23 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Input, PasswordInput } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
-import { Link, useNavigate } from "react-router-dom"
 import { AppRoutes } from "@/common/Approutes"
+import { Link, useNavigate } from "react-router-dom"
 import { postRequest } from "@/common/RequestHandler"
 import { toast } from "react-toastify"
 
 const formSchema = z.object({
+    name: z.string().min(2).max(50),
     email: z.string().min(2).max(50),
     password: z.string().min(6).max(50),
 })
 
-const LoginPage = () => {
+const RegisterPage = () => {
     const navigate = useNavigate();
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
+            name: "",
             email: "",
             password: ""
         },
@@ -31,7 +33,7 @@ const LoginPage = () => {
 
     async function onSubmit(values: z.infer<typeof formSchema>): Promise<void> {
         try {
-            const { message, data } = await postRequest("auth/login", values);
+            const { message, data } = await postRequest("auth/register", values);
             toast.success(message);
             localStorage.setItem("authToken", data.token);
             navigate(AppRoutes.appDashboard);
@@ -40,12 +42,27 @@ const LoginPage = () => {
         }
     }
 
+
     return (
         <AuthLayout><div className="bg-white rounded-xl px-6 py-7 text-center md:min-w-[400px] flex flex-col">
-            <h4 className="text-2xl font-semibold my-2">Log In</h4>
-            <p className="text-gray-500 text-sm">Enter your credentials to access your account</p>
+            <h4 className="text-2xl font-semibold my-2">Create Account</h4>
+            <p className="text-gray-500 text-sm">Enter your credentials to create your account</p>
             <Form {...form}>
                 <form className="space-y-5 text-left mt-5">
+                    <FormField
+                        control={form.control}
+                        name="name"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>FULL NAME</FormLabel>
+                                <FormControl>
+                                    <Input placeholder="Enter your name" {...field} icon="solar:user-linear" />
+                                </FormControl>
+                                <FormMessage />
+                            </FormItem>
+
+                        )}
+                    />
                     <FormField
                         control={form.control}
                         name="email"
@@ -78,17 +95,16 @@ const LoginPage = () => {
                         <div className="items-top flex space-x-2">
                             <Checkbox id="remember-me" />
                             <div className="grid gap-1.5 leading-none">
-                                <label htmlFor="remember-me" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
-                                    Remember me for 30 days
+                                <label htmlFor="remember-me" className="text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+                                    I agree with the terms and conditions
                                 </label>
                             </div>
                         </div>
-                        <button type="button" className="p-0 text-primary text-sm m-0 font-medium max-md:mx-auto">Forgot Password?</button>
                     </div>
-                    <Button type="button" asyncClick={form.handleSubmit(onSubmit)} className="w-full">Log into Account</Button>
+                    <Button type="button" asyncClick={form.handleSubmit(onSubmit)} className="w-full">Create Account</Button>
                     <div className="flex justify-center gap-x-2 items-center">
-                        <p className="text-sm text-gray-500">Are you new here?</p>
-                        <Link to={AppRoutes.register} type="button" className="p-0 text-primary text-sm m-0 font-medium">Create Account</Link>
+                        <p className="text-sm text-gray-500">Already have an account?</p>
+                        <Link to={AppRoutes.login} className="p-0 text-primary text-sm m-0 font-medium">Login Here</Link>
                     </div>
                 </form>
             </Form>
@@ -96,4 +112,4 @@ const LoginPage = () => {
     )
 }
 
-export default LoginPage
+export default RegisterPage
