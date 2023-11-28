@@ -6,7 +6,7 @@ import AppNavigation from "../ui/customs/AppNavigation";
 import { Input } from "../ui/input";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import avatar from "../../assets/images/avatar.jpg";
-import { useNavigate } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "../ui/dropdown-menu";
 
 const navigation1 = [
@@ -79,7 +79,7 @@ const ProfileDropdown = () => {
 }
 
 
-const AppLayout = ({ children }: { children?: ReactNode }) => {
+const AppLayout = () => {
     const currentURL = window.location.pathname;
     const navigate = useNavigate();
 
@@ -134,7 +134,7 @@ const AppLayout = ({ children }: { children?: ReactNode }) => {
                     </div>
                 </div>
                 <div className="px-5 md:px-8">
-                    {children}
+                    <Outlet />
                 </div>
             </div>
         </div>

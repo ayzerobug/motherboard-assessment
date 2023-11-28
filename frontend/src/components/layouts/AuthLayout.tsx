@@ -1,14 +1,14 @@
-import { ReactNode } from 'react';
 import logo from "../../assets/images/logo.png";
-import { Icon } from '@iconify/react';
+import icon from "../../assets/images/icon.png";
+import { Outlet } from 'react-router-dom';
 
-const AuthLayout = ({ children }: { children: ReactNode }) => {
+const AuthLayout = () => {
     return (
         <div className="auth-bg-pattern bg-primary-100 flex flex-col justify-center items-center h-screen">
             <img src={logo} alt="Logo" className='mb-10' />
-            {children}
+            <Outlet />
             <div className='flex items-center gap-x-2 absolute bottom-4'>
-                <Icon icon="wpf:audio-wave" className='text-primary' style={{ fontSize: '25px' }} />
+                <img src={icon} alt="Wavetech Icon" className='w-6 h-6' />
                 <p className='text-sm'>Powered by <span className='font-bold'>wavehealth</span></p>
             </div>
         </div>

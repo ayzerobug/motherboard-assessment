@@ -3,7 +3,6 @@
 
 import * as z from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
-import AuthLayout from "@/components/layouts/AuthLayout"
 import { useForm } from "react-hook-form"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Input, PasswordInput } from "@/components/ui/input"
@@ -44,7 +43,7 @@ const RegisterPage = () => {
 
 
     return (
-        <AuthLayout><div className="bg-white rounded-xl px-6 py-7 text-center md:min-w-[400px] flex flex-col">
+        <div className="bg-white rounded-xl px-6 py-7 text-center md:min-w-[400px] flex flex-col">
             <h4 className="text-2xl font-semibold my-2">Create Account</h4>
             <p className="text-gray-500 text-sm">Enter your credentials to create your account</p>
             <Form {...form}>
@@ -108,7 +107,7 @@ const RegisterPage = () => {
                     </div>
                 </form>
             </Form>
-        </div></AuthLayout>
+        </div>
     )
 }
 
